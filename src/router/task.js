@@ -17,43 +17,9 @@ router.post('/api/tasks', auth, async (req, res) => {
   }
 });
 
-router.get('/api/tasks', auth, async (req, res) => {
-  const match = {};
-  const sort = {};
-  if (req.query.completed) {
-    match.completed = req.query.completed === 'true';
-  }
-
-  if (req.query.sortBy) {
-    const parts = req.query.sortBy.split(':');
-    sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
-  }
-  try {
-
-    await req.user
-      .populate({
-        path: 'tasks',
-        match,
-        options: {
-          limit: parseInt(req.query.limit),
-          skip: parseInt(req.query.skip),
-          sort
-        }
-      })
-      .execPopulate();
-
-    const pending = await Task.find({ completed: false });
-    if (pending.length > 0) {
-      sendTaskPendingEmail(req.user.email, req.user.name).catch(error => {
-        res.status(500).send(error.message);
-      });
-    }
-    res.send(req.user.tasks);
-
-  } catch (error) {
-    res.status(500).send();
-  }
-});
+// router.get('/api/tasks', auth, async (req, res) => {
+//   const match = {};
+// });
 
 router.get('/api/tasks/:id', auth, async (req, res) => {
   const _id = req.params.id;
