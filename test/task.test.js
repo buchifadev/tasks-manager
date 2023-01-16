@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const Task = require('../src/models/task');
+const Task = require('../client/models/task');
 const {
   userOneId,
   userTwoId,

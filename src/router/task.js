@@ -1,5 +1,5 @@
 const express = require('express');
-const Task = require('../models/task');
+const Task = require('../../client/models/task');
 const { sendTaskPendingEmail } = require('../emails/mailer');
 const auth = require('../middleware/auth');
 const router = express.Router();
