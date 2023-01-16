@@ -6,6 +6,17 @@ const Task = require('./task');
 
 const userSchema = new mongoose.Schema(
   {
+
+    age: {
+      type: Number,
+      default: 0,
+      validate(value) {
+        if (value < 0) {
+          throw new Error('Age must be a postive number');
+        }
+      }
+    },
+
     name: {
       type: String,
       required: true,
@@ -23,15 +34,7 @@ const userSchema = new mongoose.Schema(
         }
       }
     },
-    age: {
-      type: Number,
-      default: 0,
-      validate(value) {
-        if (value < 0) {
-          throw new Error('Age must be a postive number');
-        }
-      }
-    },
+   
     password: {
       type: String,
       required: true,
@@ -55,6 +58,7 @@ const userSchema = new mongoose.Schema(
       default: null,
       type: Buffer
     }
+ 
   },
   {
     timestamps: true
